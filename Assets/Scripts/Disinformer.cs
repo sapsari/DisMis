@@ -19,6 +19,9 @@ public class Disinformer : MonoBehaviour
     public bool IsUnrevealed;
     public bool IsRoot;
 
+    Tooltip tooltip;
+    public string name;
+
     /*
     public GameObject curInfo;
     public DragTile curDrag;
@@ -32,6 +35,8 @@ public class Disinformer : MonoBehaviour
 
         if (button != null && !IsRoot)
             button.GetComponentInChildren<TMPro.TMP_Text>().text = unreveal.y + "x" + unreveal.x;
+
+        tooltip = FindObjectOfType<Tooltip>();
     }
 
     /*
@@ -98,10 +103,21 @@ public class Disinformer : MonoBehaviour
         */
     }
 
-    /*
-    private void OnMouseEnter()
+    
+    private void OnMouseEnter() 
     {
-        FindObjectOfType<Tooltip>().Show("DISINFOS");
+        if (!GetComponentInChildren<SpriteRenderer>().enabled)
+            return;
+
+        tooltip.Show(name);
     }
-    */
+
+    private void OnMouseExit()
+    {
+        if (!GetComponentInChildren<SpriteRenderer>().enabled)
+            return;
+
+        tooltip.Hide();
+    }
+
 }
