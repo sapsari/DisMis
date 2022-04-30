@@ -18,8 +18,8 @@ public class GameMngr : MonoBehaviour
     internal System.Collections.Concurrent.ConcurrentQueue<int> scores 
         = new System.Collections.Concurrent.ConcurrentQueue<int>();
 
-    int scoreWell = 100;
-    int scoreDisMis = -100;
+    internal int scoreWell = 100;
+    internal int scoreDisMis = -100;
 
     public TMPro.TMP_Text textBarLeft, textBarRight;
     public UnityEngine.UI.RawImage imageBarBottom, imageBarTop;

@@ -30,10 +30,13 @@ public class Tooltip : MonoBehaviour
 
     public void Show(string str)
     {
-        
+
+        var pos0 = Input.mousePosition;
         var pos1 = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         var pos2 = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-        var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        var pos = pos0;
 
         //var pos = canvas.ScreenToCanvasPosition(Input.mousePosition);
 
@@ -43,6 +46,8 @@ public class Tooltip : MonoBehaviour
         text.enabled = true;
         image.enabled = true;
         text.text = str;
+
+        Debug.Log(pos.ToString());
 
         ((RectTransform)transform).SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, text.preferredWidth + 10);
     }
