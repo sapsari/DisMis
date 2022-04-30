@@ -111,13 +111,14 @@ public class Disinformer : MonoBehaviour
         if (!GetComponentInChildren<SpriteRenderer>().enabled)
             return;
 
+
         var text = name;
 
-        if (button != null && !button.gameObject.activeSelf)
+        if (button != null && !button.gameObject.activeSelf && !IsUnrevealed)
             text = "???";
 
         tooltip.Show(text);
-        //tooltip.Show(name + " " + FindObjectOfType<GameMngr>().HasDep(this));
+        //tooltip.Show(Name + " " + FindObjectOfType<GameMngr>().HasDep(this));
     }
 
     private void OnMouseExit()

@@ -10,6 +10,7 @@ public class GameMngr : MonoBehaviour
     Link[] links;
 
     DropTable dropTable;
+    internal Popup popup;
 
     public UnityEngine.UI.Button endTurnButton;
 
@@ -35,6 +36,7 @@ public class GameMngr : MonoBehaviour
         links = FindObjectsOfType<Link>();
 
         dropTable = FindObjectOfType<DropTable>();
+        popup = FindObjectOfType<Popup>();
 
         endTurnButton.interactable = false;
         foreach (var disinformer in disinformers)
@@ -47,6 +49,10 @@ public class GameMngr : MonoBehaviour
     }
 
     bool isFirst = true;
+    bool isFirstEndTurn = true;
+    int roundNo;
+
+    bool isFirstAvailableUnreveal = true;
 
     // Update is called once per frame
     void Update()
@@ -55,7 +61,8 @@ public class GameMngr : MonoBehaviour
         {
             isFirst = false;
 
-            StartRound();
+            //StartRound();
+            popup.Display("Let's fight against\ndisinformation", true, () => StartRound());
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -68,6 +75,13 @@ public class GameMngr : MonoBehaviour
         if(isRoundStarted && !IsOver && wellinformers.All(i => !i.HasDrag))
         {
             endTurnButton.interactable = true;
+
+            if(isFirstEndTurn)
+            {
+                isFirstEndTurn = false;
+
+                popup.Display("End turn by clicking\nright bottom button", false);
+            }
         }
 
         if(isRoundStarted)
@@ -77,7 +91,17 @@ public class GameMngr : MonoBehaviour
                 var unreveal = getUnreveal(disinformer.unreveal);
 
                 if (disinformer.button != null)
+                { 
                     disinformer.button.interactable = disinformer.IsRoot || unreveal.HasValue;
+
+                    if (unreveal.HasValue && isFirstAvailableUnreveal)
+                    {
+                        isFirstAvailableUnreveal = false;
+
+                        var buttonText = disinformer.button.GetComponentInChildren<TMPro.TMP_Text>().text;
+                        popup.Display("Find out more!\nClick right button of " + buttonText, false);
+                    }
+                }
             }
         }
 
@@ -131,6 +155,8 @@ public class GameMngr : MonoBehaviour
     bool isRoundStarted;
     IEnumerator StartRoundAux()
     {
+        roundNo++;
+
         foreach (var disinformer in disinformers)
         {
             if (!disinformer.IsSpawner)
@@ -161,6 +187,12 @@ public class GameMngr : MonoBehaviour
 
         isRoundStarted = true;
 
+        if (roundNo == 1)
+            popup.Display("Drag & drop correct info\nfrom right side to the board", false);
+
+        if (roundNo == 4)
+            popup.Display("Try making big continous\nareas, like 4x4 rectangle");
+
         yield break;
     }
 
@@ -182,6 +214,13 @@ public class GameMngr : MonoBehaviour
 
     public void OnEndTurn()
     {
+        popup.HideIf("End");
+
+        // there is another popup about sth else (probably disinform buttons)
+        // so disable ending turn for now
+        if (popup.HasOtherThan("End"))
+            return;
+
         StartCoroutine(EndAndStartRound());
     }
 
@@ -229,6 +268,8 @@ public class GameMngr : MonoBehaviour
 
     public void onUnrevealButton(UnityEngine.UI.Button button)
     {
+        popup.HideIf("Find");
+
         //var curButton = UnityEngine. EventSystem.current.currentSelectedGameObject;
         var dis = disinformers.FirstOrDefault(d => d.button == button);
 
@@ -421,6 +462,8 @@ public class GameMngr : MonoBehaviour
 
             yield return new WaitForSeconds(Random.Range(0, .1f));
         }
+
+        popup.Display("Congratulations!!!\nGame is over", func: () => Application.Quit());
 
         yield break;
     }

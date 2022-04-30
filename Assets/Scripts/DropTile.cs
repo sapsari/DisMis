@@ -112,6 +112,8 @@ public class DropTile : MonoBehaviour
         state.Score = dragged.state.Score;
 
         dragged.transform.Translate(posOffset.x * -1, posOffset.y * -1, 0);
+
+        gameMngr.popup.HideIf("Drag");//hide drag & drop message
     }
 
     public bool OnDropped(DragTile dragged)

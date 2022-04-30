@@ -52,4 +52,20 @@ public class DebugButton : MonoBehaviour
         foreach (var target in targets.Where(t => t.IsRoot))
             ClickAux(target);
     }
+
+    public void OnButtonClickAdd()
+    {
+        ColorUtility.TryParseHtmlString("#98DC53", out var color);
+        var table = FindObjectOfType<DropTable>();
+
+        for(int x=0;x<4;x++)
+        {
+            for(int y=0;y<4;y++)
+            {
+                table.tiles[x, y].sprite.color = color;
+                table.tiles[x, y].state.Type = State.StateType.Wellinformed;
+                table.tiles[x, y].state.Score = 1;
+            }
+        }
+    }
 }
