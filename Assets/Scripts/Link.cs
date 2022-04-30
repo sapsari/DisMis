@@ -5,4 +5,5 @@ using UnityEngine;
 public class Link : MonoBehaviour
 {
     public Disinformer left, right;
+    internal bool silenced;
 }

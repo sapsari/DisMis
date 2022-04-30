@@ -22,6 +22,8 @@ public class Disinformer : MonoBehaviour
     Tooltip tooltip;
     public string name;
 
+    internal bool silenced;
+
     /*
     public GameObject curInfo;
     public DragTile curDrag;
@@ -110,6 +112,7 @@ public class Disinformer : MonoBehaviour
             return;
 
         tooltip.Show(name);
+        tooltip.Show(name + " " + FindObjectOfType<GameMngr>().HasDep(this));
     }
 
     private void OnMouseExit()

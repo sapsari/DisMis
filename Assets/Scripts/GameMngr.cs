@@ -262,7 +262,7 @@ public class GameMngr : MonoBehaviour
     {
         foreach (var link in links)
         {
-            if (link.right == disParam)
+            if (link.right == disParam && !link.silenced)
             {
                 link.GetComponent<SpriteRenderer>().enabled = true;
             }
@@ -277,6 +277,9 @@ public class GameMngr : MonoBehaviour
             var activeLink = links.Count(l => l.left == dis && l.GetComponent<SpriteRenderer>().enabled);
 
             if (activeLink == 0)
+                continue;
+
+            if (dis.silenced)
                 continue;
 
             dis.GetComponentInChildren<SpriteRenderer>().enabled = true;
@@ -306,9 +309,25 @@ public class GameMngr : MonoBehaviour
 
         AddToList(dis);
 
+        foreach (var link in links)
+        {
+            if (link.silenced)
+                continue;
+
+            if (link.left.silenced && !toSilence.Contains(link.gameObject))
+            {
+                toSilence.Add(link.gameObject);
+                link.silenced = true;
+            }
+        }
+
         foreach(var td in toSilence)
         {
-            Destroy(td);
+            var sr = td.GetComponent<SpriteRenderer>();
+            if (sr == null)
+                sr = td.GetComponentInChildren<SpriteRenderer>();
+            sr.enabled = false;
+
             yield return new WaitForSeconds(.2f);
         }
 
@@ -317,6 +336,7 @@ public class GameMngr : MonoBehaviour
         void AddToList(Disinformer cur)
         {
             toSilence.Add(cur.gameObject);
+            cur.silenced = true;
 
             foreach (var link in links.Where(l => l.left == cur))
             {
@@ -325,13 +345,14 @@ public class GameMngr : MonoBehaviour
                 if(!incomplete)
                 {
                     toSilence.Add(link.gameObject);
+                    link.silenced = true;
                     AddToList(link.right);
                 }
             }
 
             bool HasDependency(Disinformer d)
             {
-                if (d.IsUnrevealed)
+                if (!d.IsUnrevealed)
                     return true;
 
                 foreach(var link in links.Where(l => l.right == d))
@@ -343,5 +364,19 @@ public class GameMngr : MonoBehaviour
                 return false;
             }
         }
+    }
+
+    public bool HasDep(Disinformer d)
+    {
+        if (!d.IsUnrevealed)
+            return true;
+
+        foreach (var link in links.Where(l => l.right == d))
+        {
+            if (HasDep(link.left))
+                return true;
+        }
+
+        return false;
     }
 }
