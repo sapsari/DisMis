@@ -7,7 +7,7 @@ using DG.Tweening;
 public class DropTile : MonoBehaviour
 {
     Collider2D myCollider;
-    SpriteRenderer sprite;
+    internal SpriteRenderer sprite;
 
     public bool IsDropped { get; private set; }
 

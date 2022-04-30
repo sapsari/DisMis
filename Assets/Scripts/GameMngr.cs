@@ -25,6 +25,8 @@ public class GameMngr : MonoBehaviour
 
     public TMPro.TMP_Text textDebug;
 
+    internal bool IsOver;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -63,7 +65,7 @@ public class GameMngr : MonoBehaviour
             StartCoroutine(EndAndStartRound());
         }
 
-        if(isRoundStarted && wellinformers.All(i => !i.HasDrag))
+        if(isRoundStarted && !IsOver && wellinformers.All(i => !i.HasDrag))
         {
             endTurnButton.interactable = true;
         }
@@ -132,6 +134,9 @@ public class GameMngr : MonoBehaviour
         foreach (var disinformer in disinformers)
         {
             if (!disinformer.IsSpawner)
+                continue;
+
+            if (disinformer.silenced)
                 continue;
 
             var isDisInfo = Random.Range(0f, 1f) > .8f;
@@ -331,6 +336,13 @@ public class GameMngr : MonoBehaviour
             yield return new WaitForSeconds(.2f);
         }
 
+        if (disinformers.All(d => d.silenced))
+        {
+            IsOver = true;
+            StartCoroutine(EndEffect1_Board());
+            StartCoroutine(EndEffect2_RemoveDrags());
+        }
+
         yield break;
 
         void AddToList(Disinformer cur)
@@ -379,4 +391,65 @@ public class GameMngr : MonoBehaviour
 
         return false;
     }
+
+    IEnumerator EndEffect1_Board()
+    {
+        var drops = new List<DropTile>();
+
+        for (var x = 0; x < dropTable.width; x++)
+        {
+            for (int y = 0; y < dropTable.height; y++)
+            {
+                var drop = dropTable.tiles[x, y];
+
+                if (drop.state.Type != State.StateType.Wellinformed)
+                    drops.Add(drop);
+            }
+        }
+
+        Shuffle(drops);
+
+        ColorUtility.TryParseHtmlString("#98DC53", out var color);
+
+        foreach(var drop in drops)
+        {
+            drop.sprite.color = color;
+
+            drop.state.Type = State.StateType.Wellinformed;
+
+            drop.state.Score = 1;
+
+            yield return new WaitForSeconds(Random.Range(0, .1f));
+        }
+
+        yield break;
+    }
+
+    public static void Shuffle<T>(IList<T> list)
+    {
+        int n = list.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = Random.Range(0, n + 1);
+            T value = list[k];
+            list[k] = list[n];
+            list[n] = value;
+        }
+    }
+
+
+    IEnumerator EndEffect2_RemoveDrags()
+    {
+        foreach(var wi in wellinformers)
+        {
+            if(wi.HasDrag)
+            {
+                // Destroy(this.transform.parent.gameObject);//**--
+                Destroy(wi.curDrag.transform.parent.gameObject);
+                yield return new WaitForSeconds(.3f);
+            }    
+        }
+    }
+
 }

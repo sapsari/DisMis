@@ -8,7 +8,7 @@ public class Wellinformer : MonoBehaviour
     public GameObject[] infoPrefabs;
 
     GameObject curInfo;
-    DragTile curDrag;
+    internal DragTile curDrag;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +34,7 @@ public class Wellinformer : MonoBehaviour
         var prefab = infoPrefabs[index];
         curInfo = Instantiate(prefab, transform);
         curInfo.transform.localPosition = Vector3.zero;
+        curInfo.transform.localPosition = new Vector3(1, 0, 0);
         curInfo.SetActive(true);
         curDrag = curInfo.GetComponentInChildren<DragTile>();
     }
