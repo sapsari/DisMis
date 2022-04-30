@@ -26,6 +26,8 @@ public class GameMngr : MonoBehaviour
 
     public TMPro.TMP_Text textDebug;
 
+    internal Tooltip tooltip;
+
     internal bool IsOver;
 
     // Start is called before the first frame update
@@ -37,6 +39,7 @@ public class GameMngr : MonoBehaviour
 
         dropTable = FindObjectOfType<DropTable>();
         popup = FindObjectOfType<Popup>();
+        tooltip = FindObjectOfType<Tooltip>();
 
         endTurnButton.interactable = false;
         foreach (var disinformer in disinformers)
@@ -99,7 +102,7 @@ public class GameMngr : MonoBehaviour
                         isFirstAvailableUnreveal = false;
 
                         var buttonText = disinformer.button.GetComponentInChildren<TMPro.TMP_Text>().text;
-                        popup.Display("Find out more!\nClick right button of " + buttonText, false);
+                        popup.Display("Find out more!\nClick button of " + buttonText+ " at the left", false);
                     }
                 }
             }
@@ -191,7 +194,7 @@ public class GameMngr : MonoBehaviour
             popup.Display("Drag & drop correct info\nfrom right side to the board", false);
 
         if (roundNo == 4)
-            popup.Display("Try making big continous\nareas, like 4x4 rectangle");
+            popup.Display("Try making big continuous\nareas, like 4x4 rectangle");
 
         yield break;
     }

@@ -10,16 +10,13 @@ public class Wellinformer : MonoBehaviour
     GameObject curInfo;
     internal DragTile curDrag;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //Create();
-    }
+    public string Name;
 
-    // Update is called once per frame
-    void Update()
+    GameMngr gameMngr;
+
+    private void Start()
     {
-        
+        gameMngr = FindObjectOfType<GameMngr>();
     }
 
     public void Create(List<int> creationIndices)
@@ -40,4 +37,16 @@ public class Wellinformer : MonoBehaviour
     }
 
     public bool HasDrag => transform.childCount > 1;
+
+    private void OnMouseEnter()
+    {
+        if (curDrag == null)
+            gameMngr.tooltip.Show(Name);
+    }
+
+    private void OnMouseExit()
+    {
+        gameMngr.tooltip.Hide();
+        
+    }
 }

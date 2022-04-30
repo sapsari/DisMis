@@ -23,4 +23,14 @@ public class TooltipContent : MonoBehaviour
         tooltip.Hide();
     }
 
+    public void Enter()
+    {
+        Debug.Log("onmouseenter");
+        tooltip.Show(Content);
+    }
+
+    public void Exit()
+    {
+        tooltip.Hide();
+    }
 }

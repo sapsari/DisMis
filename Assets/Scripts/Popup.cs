@@ -60,7 +60,7 @@ public class Popup : MonoBehaviour
     {
         if (!image.enabled)
             return false;
-        if (!text.text.StartsWith(contentStartingWith))
+        if (text.text.StartsWith(contentStartingWith))
             return false;
 
         return true;

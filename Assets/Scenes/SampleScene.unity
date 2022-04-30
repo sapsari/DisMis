@@ -258,6 +258,7 @@ MonoBehaviour:
     Type: 3
     IsActive: 0
     Score: 1
+  Name: Blog Post
 --- !u!212 &7181725
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -562,6 +563,7 @@ MonoBehaviour:
     Type: 3
     IsActive: 0
     Score: 1
+  Name: Video
 --- !u!212 &38582954
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -878,6 +880,7 @@ MonoBehaviour:
     Type: 3
     IsActive: 0
     Score: 1
+  Name: Video
 --- !u!212 &95539236
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2394,6 +2397,7 @@ MonoBehaviour:
     Type: 3
     IsActive: 0
     Score: 1
+  Name: Painting
 --- !u!212 &329249024
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2557,6 +2561,7 @@ MonoBehaviour:
     Type: 3
     IsActive: 0
     Score: 1
+  Name: Photo
 --- !u!212 &351283677
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3326,6 +3331,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6474446505007535499, guid: 09d18f74b299de54997eaf569bed16cf, type: 3}
+      propertyPath: Name
+      value: Activist Kraks
+      objectReference: {fileID: 0}
+    - target: {fileID: 6474446505007535499, guid: 09d18f74b299de54997eaf569bed16cf, type: 3}
       propertyPath: infoPrefabs.Array.size
       value: 5
       objectReference: {fileID: 0}
@@ -3378,6 +3387,9 @@ GameObject:
   - component: {fileID: 459314442}
   - component: {fileID: 459314444}
   - component: {fileID: 459314443}
+  - component: {fileID: 459314445}
+  - component: {fileID: 459314446}
+  - component: {fileID: 459314447}
   m_Layer: 5
   m_Name: BarBottom
   m_TagString: Untagged
@@ -3440,6 +3452,90 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 459314441}
   m_CullTransparentMesh: 1
+--- !u!114 &459314445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 459314441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a11062233bf4094dad456bcf13a4feb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Content: HEBELEK
+--- !u!61 &459314446
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 459314441}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 300, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 600, y: 100}
+  m_EdgeRadius: 0
+--- !u!114 &459314447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 459314441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 459314445}
+          m_TargetAssemblyTypeName: TooltipContent, Assembly-CSharp
+          m_MethodName: Enter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 459314445}
+          m_TargetAssemblyTypeName: TooltipContent, Assembly-CSharp
+          m_MethodName: Exit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &459664672
 GameObject:
   m_ObjectHideFlags: 0
@@ -3544,6 +3640,7 @@ MonoBehaviour:
     Type: 0
     IsActive: 0
     Score: 0
+  Name: 
 --- !u!61 &459664676
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3837,6 +3934,7 @@ MonoBehaviour:
     Type: 3
     IsActive: 0
     Score: 1
+  Name: Blog Post
 --- !u!212 &508664173
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4272,6 +4370,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6474446505007535499, guid: 09d18f74b299de54997eaf569bed16cf, type: 3}
+      propertyPath: Name
+      value: Activist Sari
+      objectReference: {fileID: 0}
+    - target: {fileID: 6474446505007535499, guid: 09d18f74b299de54997eaf569bed16cf, type: 3}
       propertyPath: infoPrefabs.Array.size
       value: 5
       objectReference: {fileID: 0}
@@ -4557,7 +4659,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 530731749}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
@@ -4608,7 +4710,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: 0
+  m_SortingLayerID: -71044119
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &530731753
@@ -5877,6 +5979,7 @@ MonoBehaviour:
     Type: 3
     IsActive: 0
     Score: 1
+  Name: Painting
 --- !u!212 &609234173
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7905,6 +8008,7 @@ MonoBehaviour:
     Type: 1
     IsActive: 0
     Score: 0
+  Name: 
 --- !u!212 &790294352
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8877,6 +8981,7 @@ MonoBehaviour:
     Type: 3
     IsActive: 0
     Score: 1
+  Name: Video
 --- !u!212 &847036525
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -10499,6 +10604,7 @@ MonoBehaviour:
     Type: 3
     IsActive: 0
     Score: 1
+  Name: Video
 --- !u!212 &1075467711
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12808,6 +12914,7 @@ MonoBehaviour:
     Type: 3
     IsActive: 0
     Score: 1
+  Name: Article
 --- !u!212 &1376133810
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13192,6 +13299,7 @@ MonoBehaviour:
     Type: 3
     IsActive: 0
     Score: 1
+  Name: Article
 --- !u!212 &1446020349
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13875,6 +13983,7 @@ MonoBehaviour:
     Type: 2
     IsActive: 0
     Score: 0
+  Name: 
 --- !u!212 &1625507700
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14323,6 +14432,7 @@ MonoBehaviour:
     Type: 3
     IsActive: 0
     Score: 1
+  Name: Photo
 --- !u!212 &1665832539
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14693,6 +14803,7 @@ MonoBehaviour:
     Type: 3
     IsActive: 0
     Score: 1
+  Name: Article
 --- !u!212 &1686781340
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -15728,6 +15839,7 @@ MonoBehaviour:
     Type: 3
     IsActive: 0
     Score: 1
+  Name: Blog Post
 --- !u!212 &1829392929
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -18053,6 +18165,10 @@ PrefabInstance:
     - target: {fileID: 6269600901131301305, guid: 09d18f74b299de54997eaf569bed16cf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6474446505007535499, guid: 09d18f74b299de54997eaf569bed16cf, type: 3}
+      propertyPath: Name
+      value: Activist Andy
       objectReference: {fileID: 0}
     - target: {fileID: 6474446505007535499, guid: 09d18f74b299de54997eaf569bed16cf, type: 3}
       propertyPath: infoPrefabs.Array.size

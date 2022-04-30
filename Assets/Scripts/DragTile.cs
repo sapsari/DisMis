@@ -42,6 +42,8 @@ public class DragTile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     GameMngr gameMngr;
 
+    public string Name;
+
     private void Start()
     {
         /*
@@ -70,6 +72,8 @@ public class DragTile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public void OnBeginDrag(PointerEventData eventData)
     {
         Debug.Log("Begin Drag");
+
+        gameMngr.tooltip.Hide();
 
         pointerId = eventData.pointerId;
 
@@ -241,6 +245,20 @@ public class DragTile : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         colliding = null;
         collidings.Remove(collision.transform);
         //Debug.Log("TRIGGER EXIT");
+    }
+
+
+    private void OnMouseEnter()
+    {
+        if (DraggedInstance != null)
+            return;
+
+        gameMngr.tooltip.Show(Name);
+    }
+
+    private void OnMouseExit()
+    {
+        gameMngr.tooltip.Hide();
     }
 
 }
