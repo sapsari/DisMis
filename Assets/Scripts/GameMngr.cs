@@ -75,11 +75,11 @@ public class GameMngr : MonoBehaviour
             StartCoroutine(EndAndStartRound());
         }
 
-        if(isRoundStarted && !IsOver && wellinformers.All(i => !i.HasDrag))
+        if (isRoundStarted && !IsOver && wellinformers.All(i => !i.HasDrag))
         {
             endTurnButton.interactable = true;
 
-            if(isFirstEndTurn)
+            if (isFirstEndTurn)
             {
                 isFirstEndTurn = false;
 
@@ -87,32 +87,35 @@ public class GameMngr : MonoBehaviour
             }
         }
 
-        if(isRoundStarted)
+        if (isRoundStarted)
         {
             foreach (var disinformer in disinformers)
             {
                 var unreveal = getUnreveal(disinformer.unreveal);
 
                 if (disinformer.button != null)
-                { 
+                {
                     disinformer.button.interactable = disinformer.IsRoot || unreveal.HasValue;
 
                     if (unreveal.HasValue && isFirstAvailableUnreveal)
                     {
                         isFirstAvailableUnreveal = false;
 
-                        var buttonText = disinformer.button.GetComponentInChildren<TMPro.TMP_Text>().text;
-                        popup.Display("Find out more!\nClick button of " + buttonText+ " at the left", false);
+                        if (!IsOver)
+                        {
+                            var buttonText = disinformer.button.GetComponentInChildren<TMPro.TMP_Text>().text;
+                            popup.Display("Find out more!\nClick button of " + buttonText + " at the left", false);
+                        }
                     }
                 }
             }
         }
 
-        if(updateBar)
+        if (updateBar || IsOver)
         {
             updateBar = false;
 
-            while(scores.TryDequeue(out int score))
+            while (scores.TryDequeue(out int score))
             {
                 if (score > 0)
                     scoreWell += score;
@@ -126,6 +129,10 @@ public class GameMngr : MonoBehaviour
 
             textBarLeft.text = "%" + left.ToString();
             textBarRight.text = "%" + right.ToString();
+
+            if (left < 20)
+                textBarLeft.text = "";
+
 
             var barWidth = imageBarBottom.GetComponent<RectTransform>().sizeDelta.x;
             var leftWidth = barWidth * left / 100;
@@ -256,6 +263,7 @@ public class GameMngr : MonoBehaviour
 
     public void unreveal(Vector2Int size)
     {
+        ColorUtility.TryParseHtmlString("#5E5E5E", out var color);
         var coords = getUnreveal(size).Value;
 
         for (int x = coords.x; x < coords.x + size.x; x++)
@@ -264,7 +272,7 @@ public class GameMngr : MonoBehaviour
             {
                 dropTable.tiles[x, y].state.Type = State.StateType.Clueless;
                 dropTable.tiles[x, y].state.Score = 0;
-                dropTable.tiles[x, y].GetComponent<SpriteRenderer>().color = Color.black;//**--
+                dropTable.tiles[x, y].GetComponent<SpriteRenderer>().color = color;
             }
         }
     }
@@ -383,8 +391,10 @@ public class GameMngr : MonoBehaviour
         if (disinformers.All(d => d.silenced))
         {
             IsOver = true;
+            popup.Hide();// for debug runs, shouldn't happen in release
             StartCoroutine(EndEffect1_Board());
             StartCoroutine(EndEffect2_RemoveDrags());
+            StartCoroutine(EndEffect3_BottomBar());
         }
 
         yield break;
@@ -498,4 +508,19 @@ public class GameMngr : MonoBehaviour
         }
     }
 
+    IEnumerator EndEffect3_BottomBar()
+    {
+        // TODO: this can be improved, scoreWell percentage shouldn't be %100 while there are yellow/red tiles on board
+
+        const int steps = 20;
+        var delta = scoreDisMis / steps;
+
+        for (int i = 0; i < steps; i++)
+        {
+            scoreDisMis -= delta;
+            yield return new WaitForSeconds(.1f);
+        }
+
+        scoreDisMis = 0;
+    }
 }
