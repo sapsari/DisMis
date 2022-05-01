@@ -6,3 +6,7 @@ green infos may stay more than one turn, like two or three turns
 if so, any dis/mis-info randomed on top of that will be repelled
 
 player must choose the unreveal area, right now it is automatically chosen
+
+network graph created from
+https://www.carbonbrief.org/guest-post-how-climate-change-misinformation-spreads-online
+https://www.carbonbrief.org/wp-content/uploads/2020/06/The-climate-change-misinformation-network-references-removed.jpg
